@@ -1,34 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Xml.Linq;
+using Orchard;
+using Orchard.AuditTrail.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.ContentManagement.MetaData.Models;
+using Orchard.ContentManagement.Records;
 using Orchard.ContentManagement.ViewModels;
+using Orchard.ContentTypes.Events;
 using Orchard.ContentTypes.Services;
 using Orchard.Data;
 using Windsong.VersionManager.Models;
+using Windsong.VersionManager.Services;
 
 namespace Windsong.VersionManager.Settings
 {
-    public class ContentTypeVersionEditorEvents : ContentDefinitionEditorEventsBase
+    public class ContentTypeEditorEvents : ContentDefinitionEditorEventsBase
     {
-        //private readonly IContentDefinitionService _contentDefinitionService;
-        //private readonly IRepository<ContentTypeVersionRecord> _repository;
+        private readonly IVersionManagerService _versionManager;
 
-        //public ContentTypeVersionEditorEvents(
-        //    IContentDefinitionService contentDefinitionService,
-        //    IRepository<ContentTypeVersionRecord> repository)
-        //{
-        //    _contentDefinitionService = contentDefinitionService;
-        //    _repository = repository;
-        //}
+        public ContentTypeEditorEvents(IVersionManagerService versionManager)
+        {
+            _versionManager = versionManager;
+        }
 
-        //public override void TypeEditorUpdating(ContentTypeDefinitionBuilder definition)
-        //{
-        //    var type = definition.Current;
-        //    var versionRecord = new ContentTypeVersionRecord();
-        //    _repository.Create(versionRecord);
-        //}
+        public override void TypeEditorUpdated(ContentTypeDefinitionBuilder builder)
+        {
+            base.TypeEditorUpdated(builder);
+
+            _versionManager.SaveContentTypeVersion(builder.Current);
+        }
     }
 }

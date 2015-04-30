@@ -48,6 +48,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MoreLinq">
+      <HintPath>..\..\..\packages\morelinq.1.1.0\lib\net35\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -72,6 +75,7 @@
     <Content Include="Styles\Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
     <Content Include="Module.txt" />
+    <Content Include="Views\Admin\ContentItemVersions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
@@ -93,19 +97,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Handlers\RevertVersionContentContext.cs" />
+    <Compile Include="Handlers\VersionHandler.cs" />
+    <Compile Include="Handlers\ReadOnlyHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\ContentItemVersionInfo.cs" />
+    <Compile Include="Models\ContentItemVersion.cs" />
     <Compile Include="Models\ContentTypeVersion.cs" />
     <Compile Include="Models\ContentTypeVersionRecord.cs" />
+    <Compile Include="Models\VersionInfoSettings.cs" />
+    <Compile Include="Models\ReadOnlySettings.cs" />
     <Compile Include="Services\IVersionManagerService.cs" />
+    <Compile Include="Services\IVersionUtilities.cs" />
     <Compile Include="Services\VersionManagerService.cs" />
+    <Compile Include="Services\VersionUtilities.cs" />
     <Compile Include="Settings\ContentTypeEditorEvents.cs" />
+    <Compile Include="ViewModels\ContentTypeVersionListViewModel.cs" />
+    <Compile Include="ViewModels\ContentItemVersionListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
