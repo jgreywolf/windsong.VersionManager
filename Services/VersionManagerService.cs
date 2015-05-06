@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using MoreLinq;
+//using MoreLinq;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
@@ -137,7 +137,7 @@ namespace Windsong.VersionManager.Services
 
         public int GetMaxContentTypeVersionNumber(string name)
         {
-            return _contentTypeVersionRepository.Table.MaxBy(x => x.Name == name).Version;
+            return 0;// _contentTypeVersionRepository.Table.MaxBy(x => x.Name == name).Version;
         }
     }
 }

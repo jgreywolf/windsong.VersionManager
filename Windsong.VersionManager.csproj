@@ -96,6 +96,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentAdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Handlers\VersionHandler.cs" />
     <Compile Include="Handlers\ReadOnlyHandler.cs" />
@@ -118,6 +119,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\VersionManager.AllVersions.SummaryAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
