@@ -9,6 +9,7 @@
             <th>Version</th>
             <th>Modified Date</th>
             <th>Modified By</th>
+            <th>Content Type</th>
             <th>Title</th>
             <th></th>
         </tr>
@@ -19,6 +20,7 @@
                 <td>@T(item.Version)
                 </td>
                 <td>@T(item.ModifiedDate)</td>
+                <td>@T(item.ContentType)</td>
                 <td>@T(item.Title)</td>
                 <td>
                     @Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = Model.ContentId, version = item.Version }), new { target = "_blank"}) | 

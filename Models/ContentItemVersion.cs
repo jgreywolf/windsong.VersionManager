@@ -8,6 +8,7 @@ namespace Windsong.VersionManager.Models
     public class ContentItemVersion
     {
         public string Version { get; set; }
+        public string ContentType { get; set; }
         public string Title { get; set; }
         public string Identifier { get; set; }
         public string ModifiedDate { get; set; }

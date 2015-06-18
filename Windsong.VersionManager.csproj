@@ -96,8 +96,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentAdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Drivers\ReadOnlyDriver.cs" />
     <Compile Include="Handlers\VersionHandler.cs" />
     <Compile Include="Handlers\ReadOnlyHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -113,6 +113,7 @@
     <Compile Include="Settings\ContentTypeEditorEvents.cs" />
     <Compile Include="ViewModels\ContentTypeVersionListViewModel.cs" />
     <Compile Include="ViewModels\ContentItemVersionListViewModel.cs" />
+    <Compile Include="ViewModels\ReadOnlyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
@@ -121,12 +122,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\VersionManager.AllVersions.SummaryAdmin.cshtml" />
+    <Content Include="Placement.info" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Placement.info">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Views\EditorTemplates\ReadOnly.Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

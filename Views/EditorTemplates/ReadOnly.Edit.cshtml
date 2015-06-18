@@ -1,0 +1,35 @@
+﻿@model Windsong.VersionManager.ViewModels.ReadOnlyViewModel
+@{
+    Script.Require("jQuery");
+    Script.Require("jQueryUi");
+    Script.Require("jQuery_AjaxAntiForgery");
+    Script.Include("ReadOnly.js").AtFoot();
+}
+
+<style>
+    #readOnlyLabel.ui-state-active,
+    #readOnlyLabel.ui-state-active {
+        background: #95BCF2;
+    }
+
+    .ui-button, .ui-button-text .ui-button {
+        font-size: 0.9em !important;
+    }
+</style>
+
+<div id="readOnlyContainer">
+    <div id="contentLockButton" title="@lockTooltip">
+        @Html.CheckBoxFor(m => m.ReadOnly, new { @class = "dontdisable" })
+        <input type="hidden" value="@Model.ContentId" id="ReadOnlySettings_ContentId" />
+        <span id="readOnlyMessage" style="margin-left:10px;">@Model.Message</span>
+    </div>
+    <span class="hint">Setting Read Only flag will block all edits/updates. </span>
+</div>
+
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        var readOnly = ('@Model.ReadOnly'.toLowerCase() === 'true');
+    </script>
+}

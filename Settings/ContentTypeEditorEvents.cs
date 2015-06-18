@@ -29,9 +29,8 @@ namespace Windsong.VersionManager.Settings
 
         public override void TypeEditorUpdated(ContentTypeDefinitionBuilder builder)
         {
+            _versionManager.SaveContentTypeVersion(builder.Current); 
             base.TypeEditorUpdated(builder);
-
-            _versionManager.SaveContentTypeVersion(builder.Current);
         }
     }
 }

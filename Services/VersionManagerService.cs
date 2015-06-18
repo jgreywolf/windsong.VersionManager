@@ -56,6 +56,7 @@ namespace Windsong.VersionManager.Services
                             PublishedDate = commonPart.VersionPublishedUtc.ToString(),
                             ModifiedBy = modifiedBy,
                             Title = title,
+                            ContentType = version.ContentType,
                             Identifier = identifier,
                             IsPublished = version.VersionRecord.Published
                         }).ToList();

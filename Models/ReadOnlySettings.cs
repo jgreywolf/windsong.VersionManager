@@ -14,10 +14,15 @@ namespace Windsong.VersionManager.Models
             set { this.Store(p => p.ReadOnly, value); }
         }
 
-        public string User
+        public string ModifiedBy
         {
-            get { return this.Retrieve(p => p.User); }
-            set { this.Store(p => p.User, value); }
+            get { return this.Retrieve(p => p.ModifiedBy); }
+            set { this.Store(p => p.ModifiedBy, value); }
+        }
+        public string ModifiedDate
+        {
+            get { return this.Retrieve(p => p.ModifiedDate); }
+            set { this.Store(p => p.ModifiedDate, value); }
         }
     }
 }
