@@ -2,7 +2,7 @@
 AntiForgery: enabled
 Author: Justin Greywolf
 Website: https://github.com/jgreywolf/windsong.VersionManager
-Version: 1.0
+Version: 1.1
 OrchardVersion: 1.8
 Description: This module provides additional functionality for management and viewing content item version info.
 Features:

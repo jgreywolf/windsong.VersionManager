@@ -1,9 +1,11 @@
-﻿@model Windsong.VersionManager.ViewModels.ReadOnlyViewModel
+﻿@using Windsong.VersionManager.Models
+@model Windsong.VersionManager.ViewModels.ReadOnlyViewModel
 @{
     Script.Require("jQuery");
     Script.Require("jQueryUi");
     Script.Require("jQuery_AjaxAntiForgery");
     Script.Include("ReadOnly.js").AtFoot();
+
 }
 
 <style>

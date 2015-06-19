@@ -1,30 +1,41 @@
-﻿@model Windsong.VersionManager.ViewModels.ContentItemVersionListViewModel
+﻿@using Orchard.ContentManagement
+@model Windsong.VersionManager.ViewModels.ContentItemVersionListViewModel
 @{
     Script.Require("jQuery");
     Script.Require("jQueryUi");
+
+    var contentItem = Model.ContentItem;
+    var isPublished = contentItem.IsPublished();
+    Layout.Title = T("Viewing Version History for {0}", Model.CurrentTitle);
 }
 <fieldset>
-    <table class="table">
+    <table class="items">
         <tr>
             <th>Version</th>
             <th>Modified Date</th>
             <th>Modified By</th>
-            <th>Content Type</th>
             <th>Title</th>
+            <th>Published Date</th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model.Versions)
+        @foreach (var item in Model.Versions.Select((value, i) => new { i, value }))
         {
+            var imageName = isPublished ? "online.gif" : "offline.gif";
+            var alt = isPublished ? "is published" : "is not published";
+            var title = T("Version {0} {1}", contentItem.Version, alt);
             <tr>
-                <td>@T(item.Version)
-                </td>
-                <td>@T(item.ModifiedDate)</td>
-                <td>@T(item.ContentType)</td>
-                <td>@T(item.Title)</td>
+                <td>@T(item.value.Version) <img class="icon" src="/Modules/Orchard.PublishLater/Content/Admin/images/@imageName" alt="@alt" title="@alt" /></td>
+                <td>@T(item.value.ModifiedDate)</td>
+                <td>@T(item.value.ModifiedBy)</td>
+                <td>@T(item.value.Title)</td>
+                <td>@T(item.value.PublishedDate)</td>
                 <td>
-                    @Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = Model.ContentId, version = item.Version }), new { target = "_blank"}) | 
-                    @Html.Link(T("Revert").Text, Url.Action("PromoteVersion", "Admin", new { area = "Windsong.VersionManager", id = Model.ContentId, version = item.Version })) 
+                    @Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = Model.ContentId, version = item.value.Version }), new { target = "_blank"}) 
+                    @if (item.i > 0)
+                    {
+                         @Html.Link(T(" | Revert").Text, Url.Action("PromoteVersion", "Admin", new {area = "Windsong.VersionManager", id = Model.ContentId, version = item.value.Version}))
+                    }
                 </td>
             </tr>
         }

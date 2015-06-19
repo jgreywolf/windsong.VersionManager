@@ -11,6 +11,7 @@ namespace Windsong.VersionManager.ViewModels
     {
         public int ContentId { get; set; }
         public ContentItem ContentItem { get; set; }
+        public string ContentType { get; set; }
         public string CurrentTitle { get; set; }
         public bool ReadOnly { get; set; }
         public IEnumerable<ContentItemVersion> Versions { get; set; }

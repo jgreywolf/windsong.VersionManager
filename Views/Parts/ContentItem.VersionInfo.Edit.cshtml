@@ -1,0 +1,15 @@
+﻿@using Orchard.ContentManagement
+@using Windsong.VersionManager.Models
+@{
+    ContentItem contentItem = Model.ContentItem;
+
+    var isPublished = contentItem.HasPublished();
+    var imageName = isPublished ? "online.gif" : "offline.gif";
+    var alt = isPublished ? "is published" : "is not published";
+    var status = isPublished ? "Published" : (contentItem.HasDraft() ? "Draft" : "Not Published");
+}
+<div class="versionInfo">
+    @T("Version {0} (<img class='icon' src='{1}{2}' alt='{3}' title='{4}' /> {5})",contentItem.Version, Url.Content("~/Modules/Orchard.PublishLater/Content/Admin/images/"),imageName, alt, alt,status)
+    @Html.Link(T("All Versions").Text, Url.Action("ContentItemVersions", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id}))
+</div>
+

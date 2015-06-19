@@ -31,7 +31,6 @@ namespace Windsong.VersionManager.Controllers
             IVersionManagerService versionManager,
             IShapeFactory shapeFactory)
         {
-
             Services = orchardServices;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
@@ -55,23 +54,10 @@ namespace Windsong.VersionManager.Controllers
             {
                 ContentId = id,
                 ContentItem = item,
+                ContentType = item.ContentType,
                 CurrentTitle = itemTitle,
                 ReadOnly = item.Has<ReadOnlySettings>() && item.As<ReadOnlySettings>().ReadOnly,
                 Versions = _versionManager.GetContentItemVersionList(id)
-            };
-
-            return View(viewModel);
-        }
-
-        public ActionResult ContentTypeVersions(string id)
-        {
-            var type = _contentDefinitionManager.GetTypeDefinition(id);
-            
-            var viewModel = new ContentTypeVersionListViewModel
-            {
-                Name = id,
-                DisplayName = type.DisplayName,
-                Versions = _versionManager.GetContentTypeVersionList(id)
             };
 
             return View(viewModel);

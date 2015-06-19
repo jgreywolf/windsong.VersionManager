@@ -48,22 +48,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MoreLinq">
-      <HintPath>..\..\..\packages\morelinq.1.1.0\lib\net35\MoreLinq.dll</HintPath>
+    <Reference Include="Orchard.AuditTrail, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Orchard.AuditTrail\bin\Orchard.AuditTrail.dll</HintPath>
+    </Reference>
+    <Reference Include="Orchard.ContentTypes">
+      <HintPath>..\Orchard.AuditTrail\bin\Orchard.ContentTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="Orchard.Core, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Orchard.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Orchard.Framework, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Orchard.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
+      <HintPath>bin\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -78,45 +88,25 @@
     <Content Include="Views\Admin\ContentItemVersions.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
-      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
-      <Name>Orchard.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
-      <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
-      <Name>Orchard.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.AuditTrail\Orchard.AuditTrail.csproj">
-      <Project>{3dd574cd-9c5d-4a45-85e1-ebba64c22b5f}</Project>
-      <Name>Orchard.AuditTrail</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.ContentTypes\Orchard.ContentTypes.csproj">
-      <Project>{0e7646e8-fe8f-43c1-8799-d97860925ec4}</Project>
-      <Name>Orchard.ContentTypes</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Drivers\ContentVersionInfoDriver.cs" />
     <Compile Include="Drivers\ReadOnlyDriver.cs" />
     <Compile Include="Handlers\VersionHandler.cs" />
     <Compile Include="Handlers\ReadOnlyHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\ContentItemVersion.cs" />
-    <Compile Include="Models\ContentTypeVersion.cs" />
-    <Compile Include="Models\ContentTypeVersionRecord.cs" />
     <Compile Include="Models\VersionInfoSettings.cs" />
     <Compile Include="Models\ReadOnlySettings.cs" />
     <Compile Include="Services\IVersionManagerService.cs" />
     <Compile Include="Services\IVersionUtilities.cs" />
     <Compile Include="Services\VersionManagerService.cs" />
     <Compile Include="Services\VersionUtilities.cs" />
-    <Compile Include="Settings\ContentTypeEditorEvents.cs" />
-    <Compile Include="ViewModels\ContentTypeVersionListViewModel.cs" />
     <Compile Include="ViewModels\ContentItemVersionListViewModel.cs" />
     <Compile Include="ViewModels\ReadOnlyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
+    <Folder Include="Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -125,7 +115,10 @@
     <Content Include="Placement.info" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\ReadOnly.Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts.ReadOnly.Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\ContentItem.VersionInfo.Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

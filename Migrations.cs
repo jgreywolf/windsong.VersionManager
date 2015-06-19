@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Windsong.VersionManager.Models;
 
 namespace Windsong.VersionManager
 {
@@ -16,26 +17,22 @@ namespace Windsong.VersionManager
         }
 
         public int Create() {
-			// Creating table ContentDefinitionVersionRecord
-            SchemaBuilder.CreateTable("ContentTypeVersionRecord", table => table
-				.Column<int>("Id", column => column.PrimaryKey().Identity())
-                .Column<string>("Name")
-                .Column<int>("Number")
-                .Column<string>("Parts", c => c.Unlimited())
-                .Column<string>("Settings", c => c.Unlimited())
-                .Column<int>("ContentTypeRecord_id", c => c.NotNull())
-			);
 
-            SchemaBuilder.AlterTable("ContentTypeVersionRecord",
+            // Creating table BodyPartVersionRecord
+            SchemaBuilder.CreateTable("BodyPartVersionRecord", table => table
+                .Column<int>("Id", column => column.PrimaryKey().Identity())
+                .Column<int>("ContentItemRecord_id", c => c.NotNull())
+                .Column<int>("ContentItemVersionRecord_id", c => c.NotNull())
+                .Column<string>("Text")
+                .Column<string>("Format")
+            );
+
+            SchemaBuilder.AlterTable("BodyPartVersionRecord",
                 table => table
-                    .CreateIndex("IDX_ContentTypeRecord_id", "ContentTypeRecord_id")
+                    .CreateIndex("IDX_ContentItemRecord_id", "ContentItemRecord_id")
                 );
 
 
-            foreach (var typeDefinition in _contentDefinitionManager.ListTypeDefinitions())
-            {
-                
-            }
 
             return 1;
         }

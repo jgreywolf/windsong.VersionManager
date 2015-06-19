@@ -1,5 +1,6 @@
 ﻿<Placement>
-  <Match Path="~/Admin/Users/Edit/*">
-    <Place Parts_User_EditPassword_Edit="Content:1"/>
-  </Match>
+  
+    <Place Parts_ReadOnly_Edit="Content:before"/>
+  <Place Parts_ContentItem_VersionInfo_Edit="Content:before"/>
+  
 </Placement>

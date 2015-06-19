@@ -14,6 +14,6 @@ namespace Windsong.VersionManager.Models
         public string ModifiedDate { get; set; }
         public string PublishedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public bool IsPublished { get; set; }   
+        public bool IsPublished { get; set; }
     }
 }
