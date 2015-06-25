@@ -17,8 +17,8 @@ namespace Windsong.VersionManager.Handlers
         {
             T = NullLocalizer.Instance;
             OnPublishing<ContentPart>((context, part) => PublishContentItem(part, context));
-            OnUnpublishing<ContentPart>((context, part) => UnpublishContentItem(part));
-            OnRemoving<ContentPart>((context, part) => RemoveContentItem(part));
+            OnUnpublishing<ContentPart>((context, part) => UnpublishContentItem(part, context));
+            OnRemoving<ContentPart>((context, part) => RemoveContentItem(part, context));
         }
 
         public Localizer T { get; set; }
@@ -34,15 +34,18 @@ namespace Windsong.VersionManager.Handlers
             }
         }
 
-        public void UnpublishContentItem(ContentPart part) {
+        public void UnpublishContentItem(ContentPart part, PublishContentContext context) {
             var settings = part.As<ReadOnlySettings>();
-            if (settings.ReadOnly) {
+            if (settings.ReadOnly)
+            {
+                context.Cancel = true;
             }
         }
 
-        public void RemoveContentItem(ContentPart part) {
+        public void RemoveContentItem(ContentPart part, RemoveContentContext context) {
             var settings = part.As<ReadOnlySettings>();
             if (settings.ReadOnly) {
+                //context.
             }
         }
     }

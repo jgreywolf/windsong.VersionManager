@@ -8,3 +8,4 @@ Description: This module provides additional functionality for management and vi
 Features:
     Windsong.VersionManager:
         Description: This module provides additional functionality for management and viewing content item version info.
+		Dependencies: Orchard.AuditTrail

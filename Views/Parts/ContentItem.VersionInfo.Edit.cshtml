@@ -1,15 +1,66 @@
 ﻿@using Orchard.ContentManagement
 @using Windsong.VersionManager.Models
 @{
+    Style.Include("VersionManager.css");
+    Style.Require("jQueryUi");
+
+    Script.Require("jQuery");
+    Script.Require("jQueryUi");
+    Script.Include("jQuery_AjaxAntiForgery.js");
+    Script.Include("VersionInfo.js").AtFoot();
+
     ContentItem contentItem = Model.ContentItem;
+    var readOnlySettings = contentItem.As<ReadOnlySettings>();
+    var isReadOnly = readOnlySettings != null && readOnlySettings.ReadOnly;
 
     var isPublished = contentItem.HasPublished();
-    var imageName = isPublished ? "online.gif" : "offline.gif";
-    var alt = isPublished ? "is published" : "is not published";
-    var status = isPublished ? "Published" : (contentItem.HasDraft() ? "Draft" : "Not Published");
+    var hasDraft = contentItem.HasDraft();
+    var publishedItem = contentItem.Record.Versions.SingleOrDefault(x => x.Published);
+    var publishedVersion = publishedItem != null ? publishedItem.Number : 0;
+    var viewingPublished = publishedVersion == contentItem.Version;
 }
-<div class="versionInfo">
-    @T("Version {0} (<img class='icon' src='{1}{2}' alt='{3}' title='{4}' /> {5})",contentItem.Version, Url.Content("~/Modules/Orchard.PublishLater/Content/Admin/images/"),imageName, alt, alt,status)
-    @Html.Link(T("All Versions").Text, Url.Action("ContentItemVersions", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id}))
+
+<div style="width:100%;">
+    <div style="float:left;">
+        <ul class="versionInfo">
+            @if (isPublished)
+            {
+                <li>@T("<img class='icon' src='{0}' alt='{1}' title='{1}' />", Url.Content("~/Modules/Orchard.PublishLater/Content/Admin/images/online.gif"), "This content is published")</li>
+                <li>@T("Version {0}", publishedVersion)</li>
+                if (!viewingPublished)
+                {
+                    <li>@Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = item.value.Version }), new { onclick = "openDialogWindow()" })</li>
+                    <li>@Html.Link(T("Compare").Text, Url.Action("CompareVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = item.value.Version }), new { onclick = "openDialogWindow()" })</li>
+                }
+            }
+            <li>|</li>
+            @if (hasDraft)
+            {
+                <li><img class="icon" src="@Href("~/Modules/Orchard.PublishLater/Content/Admin/images/draft.gif")" alt="@T("Draft")" title="@T("The page has a draft")" /></li>
+                <li>@T("Viewing draft (version {0})", contentItem.Version)</li>
+            }
+            else
+            {
+                <li>@T("Viewing published version")</li>
+            }
+            <li>
+                &nbsp;@Html.Link(T("(Version History)").Text, Url.Action("ContentItemVersions", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id }))
+            </li>
+        </ul>
+    </div>
+    <div style="float:right;">
+        <div id="readOnlyContainer">
+            <input type="radio" id="btnSetReadOnly" name="readonly" value="false" class="dontdisable" /><label id="lblSetReadOnly" for="btnSetReadOnly">Read Only</label>
+            <input type="radio" id="btnRemoveReadOnly" name="readonly" value="true" class="dontdisable" /><label id="lblRemoveReadOnly" for="btnRemoveReadOnly">Editable</label>
+            <input type="hidden" value="@contentItem.Id" id="ReadOnlySettings_ContentId" />
+        </div>
+    </div>
 </div>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        var isReadOnly = ('@isReadOnly'.toLowerCase() === 'true');
+    </script>
+}
 

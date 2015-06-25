@@ -38,7 +38,6 @@ namespace Windsong.VersionManager.Drivers
 
         protected override DriverResult Editor(ContentPart part, dynamic shapeHelper)
         {
-            var currentUser = _authenticationService.GetAuthenticatedUser();
             var settings = part.As<ReadOnlySettings>() ?? new ReadOnlySettings { ReadOnly = false };
 
             var viewModel = new ReadOnlyViewModel
@@ -52,8 +51,8 @@ namespace Windsong.VersionManager.Drivers
             viewModel.Message = viewModel.ReadOnly == null ? T("Last set: never") :
                 T("Last set by {1} at {2}", viewModel.ModifiedBy.UserName, viewModel.ModifiedDate.ToString());
 
-            return ContentShape("Parts_ReadOnly_Edit",
-                                () => shapeHelper.EditorTemplate(TemplateName: "Parts.ReadOnly.Edit", Model: viewModel, Prefix: Prefix));
+            return ContentShape("PaFDDDrts_ReadOnly_Edit",
+                                () => shapeHelper.EditorTemplate(TemplateName: "PaFDDDrts.ReadOnly.Edit", Model: viewModel, Prefix: Prefix));
         }
     }
 }

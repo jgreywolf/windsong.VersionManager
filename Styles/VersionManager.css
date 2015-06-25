@@ -1,0 +1,37 @@
+﻿div.versionInfo ul {
+    list-style-type: none;
+}
+
+ul.versionInfo li {
+    float: left;
+    padding-right: 4px;
+}
+
+fieldset.readOnly {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+a.readOnly,
+a.readOnly:hover {
+    cursor: not-allowed !important;
+    color: #A9A9A9 !important;
+}
+
+span.readOnly,
+button.readOnly, button.readOnly:hover, button.readOnly:focus {
+    background: #EBEBE4;
+    color: #778899;
+    border-color: #BDBCBC;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+#lblSetReadOnly.ui-state-active,
+#lblRemoveReadOnly.ui-state-active {
+    background: #95BCF2;
+}
+
+.ui-button, .ui-button-text .ui-button {
+    font-size: 0.9em !important;
+}

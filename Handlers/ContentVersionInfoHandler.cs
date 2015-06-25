@@ -12,17 +12,18 @@ using Windsong.VersionManager.Services;
 
 namespace Windsong.VersionManager.Handlers
 {
-    public class VersionHandler: ContentHandler {
+    public class ContentVersionInfoHandler: ContentHandler {
         private readonly IVersionUtilities _utilities;
-        public VersionHandler(IVersionUtilities utilities) {
+        public ContentVersionInfoHandler(IVersionUtilities utilities) {
             _utilities = utilities;
             OnUpdated<ContentPart>((context, part) => UpdateVersionInfo(part, context));
         }
 
-        protected override void Activating(ActivatingContentContext context)
-        {
-            context.Builder.Weld<VersionInfoSettings>();
-        }
+        //protected override void Activating(ActivatingContentContext context)
+        //{
+        //    context.Builder.Weld<VersionInfoSettings>();
+        //}
+
         private void UpdateVersionInfo(IContent item, UpdateContentContext context)
         {
             var settings = item.As<VersionInfoSettings>();

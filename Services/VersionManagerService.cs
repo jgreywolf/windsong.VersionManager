@@ -34,9 +34,9 @@ namespace Windsong.VersionManager.Services
 
         public IEnumerable<ContentItemVersion> GetContentItemVersionList(int id)
         {
-            var versions = _contentManager.GetAllVersions(id);
+            var versions = _contentManager.GetAllVersions(id).OrderByDescending(x=>x.Version);
             var list = (from version in versions
-                        let modifiedBy = version.Has<VersionInfoSettings>() ? (String.IsNullOrWhiteSpace(version.As<VersionInfoSettings>().ModifiedBy) ? "Unknown" : version.As<VersionInfoSettings>().ModifiedBy) : (String.IsNullOrWhiteSpace(version.As<CommonPart>().Owner.ToString()) ? "Unknown" : version.As<CommonPart>().Owner.ToString())
+                        let modifiedBy = version.Has<VersionInfoSettings>() ? (String.IsNullOrWhiteSpace(version.As<VersionInfoSettings>().ModifiedBy) ? "Unknown" : version.As<VersionInfoSettings>().ModifiedBy) : (String.IsNullOrWhiteSpace(version.As<CommonPart>().Owner.UserName) ? "Unknown" : version.As<CommonPart>().Owner.UserName)
                         let commonPart = version.As<CommonPart>()
                         let title = version.Has<TitlePart>() ? version.As<TitlePart>().Title : String.Empty
                         let identifier = version.Has<IdentityPart>() ? version.As<IdentityPart>().Identifier : String.Empty
@@ -51,18 +51,27 @@ namespace Windsong.VersionManager.Services
                             IsPublished = version.VersionRecord.Published,
                         }).ToList();
 
-            return list.OrderByDescending(x => x.Version);
+            return list;
         }
 
-        public int BuildNewContentItemVersion(ContentItem item, bool asPublished)
+        public int BuildNewContentItemVersion(ContentItem versionToPromote)
         {
-            var contentItemRecord = item.Record;
+            var readOnlySettings = versionToPromote.Has<ReadOnlySettings>()
+                ? versionToPromote.As<ReadOnlySettings>()
+                : new ReadOnlySettings(){ReadOnly = false};
+
+            if (readOnlySettings.ReadOnly)
+            {
+                return 0;
+            }
+
+            var contentItemRecord = versionToPromote.Record;
 
             var newItemVersionRecord = new ContentItemVersionRecord
             {
                 ContentItemRecord = contentItemRecord,
                 Latest = true,
-                Published = asPublished,
+                Published = false,
                 Data = contentItemRecord.Data,
             };
 
@@ -81,7 +90,7 @@ namespace Windsong.VersionManager.Services
             contentItemRecord.Versions.Add(newItemVersionRecord);
             _contentItemVersionRepository.Create(newItemVersionRecord);
 
-            var newContentItem = _contentManager.New(item.ContentType);
+            var newContentItem = _contentManager.New(versionToPromote.ContentType);
             newContentItem.VersionRecord = newItemVersionRecord;
 
             return newContentItem.Version;

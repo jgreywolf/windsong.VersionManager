@@ -3,9 +3,9 @@
 @{
     Script.Require("jQuery");
     Script.Require("jQueryUi");
-
+    Script.Include("VersionInfo.js").AtFoot();
+    
     var contentItem = Model.ContentItem;
-    var isPublished = contentItem.IsPublished();
     Layout.Title = T("Viewing Version History for {0}", Model.CurrentTitle);
 }
 <fieldset>
@@ -21,23 +21,29 @@
 
         @foreach (var item in Model.Versions.Select((value, i) => new { i, value }))
         {
-            var imageName = isPublished ? "online.gif" : "offline.gif";
-            var alt = isPublished ? "is published" : "is not published";
-            var title = T("Version {0} {1}", contentItem.Version, alt);
+            var versionPublished = item.value.IsPublished;
+            var alt = versionPublished ? "is published" : "is not published";
             <tr>
-                <td>@T(item.value.Version) <img class="icon" src="/Modules/Orchard.PublishLater/Content/Admin/images/@imageName" alt="@alt" title="@alt" /></td>
-                <td>@T(item.value.ModifiedDate)</td>
-                <td>@T(item.value.ModifiedBy)</td>
-                <td>@T(item.value.Title)</td>
-                <td>@T(item.value.PublishedDate)</td>
                 <td>
-                    @Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = Model.ContentId, version = item.value.Version }), new { target = "_blank"}) 
-                    @if (item.i > 0)
-                    {
-                         @Html.Link(T(" | Revert").Text, Url.Action("PromoteVersion", "Admin", new {area = "Windsong.VersionManager", id = Model.ContentId, version = item.value.Version}))
-                    }
-                </td>
-            </tr>
+                    @T(item.value.Version)
+                @if (versionPublished)
+                {
+                    <img class="icon" src="/Modules/Orchard.PublishLater/Content/Admin/images/online.gif" alt="@alt" title="@alt" />
+                }
+            </td>
+            <td>@T(item.value.ModifiedDate)</td>
+            <td>@T(item.value.ModifiedBy)</td>
+            <td>@T(item.value.Title)</td>
+            <td>@T(item.value.PublishedDate)</td>
+            <td>
+                @if (item.i > 0)
+                {
+                    @Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = item.value.Version }), new { onclick = "openDialogWindow();" })
+                    @Html.Link(T(" | Compare With Latest").Text, Url.Action("CompareVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = item.value.Version }), new { onclick = "openDialogWindow();" })
+                    @Html.Link(T(" | Promote").Text, Url.Action("PromoteVersion", "Admin", new { area = "Windsong.VersionManager", id = Model.ContentId, versionId = item.value.Version }))
+                }
+            </td>
+        </tr>
         }
 
     </table>

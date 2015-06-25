@@ -1,0 +1,24 @@
+﻿@using Orchard.ContentManagement
+@{
+    
+    Style.Include("VersionManager.css");
+    
+    Script.Require("ShapesBase");
+    Script.Require("jQuery");
+    Script.Require("jQueryUi");
+    Script.Include("VersionInfo.js").AtFoot();
+    
+    var contentItem = (ContentItem)Model.ContentItem;
+    Layout.Title = T("{0} - {1} (version {2})", contentItem.ContentType, Html.ItemDisplayText(contentItem), contentItem.Version);
+}
+<div class="disabled-content-wrapper">
+    @Display(Model)
+    <div class="disabled-content-overlay"></div>
+</div>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        var isReadOnly = true;
+    </script>
+}

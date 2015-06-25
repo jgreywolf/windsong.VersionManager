@@ -1,6 +1,5 @@
 ﻿<Placement>
-  
-    <Place Parts_ReadOnly_Edit="Content:before"/>
-  <Place Parts_ContentItem_VersionInfo_Edit="Content:before"/>
-  
+  <Match Path="/Admin/Contents/Edit/*">
+    <Place Parts_ContentItem_VersionInfo_Edit="Content:before"/>
+  </Match>
 </Placement>

@@ -32,8 +32,6 @@ namespace Windsong.VersionManager
                     .CreateIndex("IDX_ContentItemRecord_id", "ContentItemRecord_id")
                 );
 
-
-
             return 1;
         }
     }
