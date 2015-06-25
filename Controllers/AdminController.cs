@@ -86,7 +86,7 @@ namespace Windsong.VersionManager.Controllers
                 _notifier.Information(T("Version {0} of this content has been promoted to latest (draft) as version {1}", versionId, newVersionNumber));   
             }
 
-            return this.Redirect("~/Admin/Contents/Edit/" + id);
+            return RedirectToAction("Edit", "Admin", new { area = "", id = id});
         }
 
         public ActionResult ViewVersion(int id, int versionId)

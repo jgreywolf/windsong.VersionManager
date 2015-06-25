@@ -29,8 +29,8 @@
                 <li>@T("Version {0}", publishedVersion)</li>
                 if (!viewingPublished)
                 {
-                    <li>@Html.Link(T("View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = item.value.Version }), new { onclick = "openDialogWindow()" })</li>
-                    <li>@Html.Link(T("Compare").Text, Url.Action("CompareVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = item.value.Version }), new { onclick = "openDialogWindow()" })</li>
+                    <li>@Html.Link(T("| View").Text, Url.Action("ViewVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = publishedVersion }), new { onclick = "openDialogWindow()" })</li>
+                    <li>@Html.Link(T("| Compare").Text, Url.Action("CompareVersion", "Admin", new { area = "Windsong.VersionManager", id = contentItem.Id, versionId = publishedVersion }), new { onclick = "openDialogWindow()" })</li>
                 }
             }
             <li>|</li>
